@@ -1,0 +1,470 @@
+name: Transactions
+description: |-
+
+  APIs for managing purchase transactions.
+  All endpoints require authentication.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/transactions
+    metadata:
+      custom: []
+      groupName: Transactions
+      groupDescription: |-
+
+        APIs for managing purchase transactions.
+        All endpoints require authentication.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'List User Transactions'
+      description: 'Retrieve all transactions for the authenticated user with product and category details.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters:
+      status:
+        custom: []
+        name: status
+        description: 'Filter by transaction status (pending, processing, completed, cancelled).'
+        required: false
+        example: pending
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanQueryParameters:
+      status: pending
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "data": [
+              {
+                "id": 1,
+                "quantity": 2,
+                "total_price": "3000000.00",
+                "status": "pending",
+                "payment_method": "transfer_bank",
+                "shipping_address": "Jl. Sudirman No. 1",
+                "product": {
+                  "id": 1,
+                  "name": "Midnight Oud",
+                  "price": "1500000.00",
+                  "category": {
+                    "id": 1,
+                    "name": "Eau de Parfum"
+                  }
+                }
+              }
+            ]
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/transactions/{transaction}'
+    metadata:
+      custom: []
+      groupName: Transactions
+      groupDescription: |-
+
+        APIs for managing purchase transactions.
+        All endpoints require authentication.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Show Transaction Detail'
+      description: 'Retrieve a specific transaction with product and category details.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      transaction:
+        custom: []
+        name: transaction
+        description: 'The ID of the transaction.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      transaction: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "data": {
+              "id": 1,
+              "quantity": 2,
+              "total_price": "3000000.00",
+              "status": "pending",
+              "payment_method": "transfer_bank",
+              "shipping_address": "Jl. Sudirman No. 1",
+              "notes": null,
+              "product": {
+                "id": 1,
+                "name": "Midnight Oud",
+                "category": {
+                  "id": 1,
+                  "name": "Eau de Parfum"
+                }
+              },
+              "user": {
+                "id": 1,
+                "name": "Admin Parfum Store"
+              }
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: |-
+          {
+            "success": false,
+            "message": "Transaction not found"
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/transactions
+    metadata:
+      custom: []
+      groupName: Transactions
+      groupDescription: |-
+
+        APIs for managing purchase transactions.
+        All endpoints require authentication.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create Transaction'
+      description: |-
+        Create a new purchase transaction. Automatically calculates total price
+        based on product price × quantity. Validates stock availability.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      product_id:
+        custom: []
+        name: product_id
+        description: 'The ID of the product to purchase.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      quantity:
+        custom: []
+        name: quantity
+        description: 'The quantity to purchase.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      payment_method:
+        custom: []
+        name: payment_method
+        description: 'The payment method (transfer_bank, e_wallet, cod).'
+        required: true
+        example: transfer_bank
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      shipping_address:
+        custom: []
+        name: shipping_address
+        description: 'The shipping address.'
+        required: true
+        example: 'Jl. Sudirman No. 1, Jakarta Pusat'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      notes:
+        custom: []
+        name: notes
+        description: 'optional Additional notes for the order.'
+        required: false
+        example: 'Please wrap as gift.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      product_id: 1
+      quantity: 2
+      payment_method: transfer_bank
+      shipping_address: 'Jl. Sudirman No. 1, Jakarta Pusat'
+      notes: 'Please wrap as gift.'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 201
+        content: |-
+          {
+            "success": true,
+            "message": "Transaction created successfully",
+            "data": {
+              "id": 6,
+              "product_id": 1,
+              "quantity": 2,
+              "total_price": "3000000.00",
+              "status": "pending",
+              "payment_method": "transfer_bank"
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+            "success": false,
+            "message": "Insufficient stock. Available: 10"
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - PUT
+    uri: 'api/transactions/{transaction}'
+    metadata:
+      custom: []
+      groupName: Transactions
+      groupDescription: |-
+
+        APIs for managing purchase transactions.
+        All endpoints require authentication.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update Transaction Status'
+      description: 'Update the status of an existing transaction.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      transaction:
+        custom: []
+        name: transaction
+        description: 'The ID of the transaction.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      transaction: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      status:
+        custom: []
+        name: status
+        description: 'The new status (pending, processing, completed, cancelled).'
+        required: true
+        example: processing
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      status: processing
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "Transaction updated successfully",
+            "data": {
+              "id": 1,
+              "status": "processing"
+            }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: |-
+          {
+            "success": false,
+            "message": "Transaction not found"
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - DELETE
+    uri: 'api/transactions/{transaction}'
+    metadata:
+      custom: []
+      groupName: Transactions
+      groupDescription: |-
+
+        APIs for managing purchase transactions.
+        All endpoints require authentication.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete Transaction'
+      description: |-
+        Remove a transaction record. Only pending transactions can be deleted.
+        Stock will be restored when deleted.
+      authenticated: true
+      deprecated: false
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      transaction:
+        custom: []
+        name: transaction
+        description: 'The ID of the transaction.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      transaction: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "success": true,
+            "message": "Transaction deleted successfully"
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 400
+        content: |-
+          {
+            "success": false,
+            "message": "Only pending transactions can be deleted"
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: |-
+          {
+            "success": false,
+            "message": "Transaction not found"
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 3V5EgbkvZcDPa166h8fd4ae'
+    controller: null
+    method: null
+    route: null
